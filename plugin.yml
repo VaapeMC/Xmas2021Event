@@ -1,0 +1,12 @@
+name: Xmas2021Event
+main: me.vaape.xmas2021event.Xmas2021Event
+version: 1.0
+api-version: 1.17
+depend: []
+commands:
+  spawnsnowman:
+    description: Spawns a snowman at player location
+  addsnowmanpoint:
+    description: Adds a location to the list of available snowman spawn points
+  addfirstsnowmanpoint:
+    description: Adds the first snowman spawn point to the config
