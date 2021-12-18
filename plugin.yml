@@ -10,3 +10,5 @@ commands:
     description: Adds a location to the list of available snowman spawn points
   addfirstsnowmanpoint:
     description: Adds the first snowman spawn point to the config
+  clearsnowmanpoints:
+    description: Clears all snowman spawn points and sets one where you are
