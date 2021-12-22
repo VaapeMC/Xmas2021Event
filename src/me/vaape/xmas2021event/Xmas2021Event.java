@@ -33,6 +33,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -117,6 +118,10 @@ public class Xmas2021Event extends JavaPlugin implements Listener{
 	    }
 	    	    
 	    eventClock.setLore(Collections.singletonList(ChatColor.DARK_PURPLE + "Christmas 2021"));
+	    List<String> clockLore = new ArrayList<String>();
+	    clockLore.add(ChatColor.DARK_PURPLE + "Christmas 2021");
+	    clockLore.add(ChatColor.GRAY + "Snowmen killed: 0");
+	    eventClock.setLore(clockLore);
 	    eventClock.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
 	    eventClock.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 	    ItemMeta clockMeta = eventClock.getItemMeta();
@@ -372,5 +377,33 @@ public class Xmas2021Event extends JavaPlugin implements Listener{
 	@EventHandler
 	public void onBedInteract (PlayerBedEnterEvent event) {
 		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onKill (EntityDeathEvent event) {
+		Entity entity = event.getEntity();
+		if (entity instanceof Snowman) {
+			if(((Snowman) entity).getKiller() instanceof Player) {
+				Player killer = (Player) ((Snowman) entity).getKiller();
+				ItemStack hand = killer.getInventory().getItemInMainHand();
+				ItemMeta meta = hand.getItemMeta();
+				if (meta != null) {
+					if (meta.hasLore()) {
+						for (String loreLine : meta.getLore()) {
+							if (loreLine.contains("Snowmen killed:")) {
+								List<String> lore = meta.getLore();
+								String[] killLine = lore.get(lore.size() - 1).split("\\s");
+								int snowmenkills = Integer.parseInt(killLine[2]);
+								String newKillLine = ChatColor.GRAY + killLine[0] + " " + killLine[1] + " " + (snowmenkills + 1);
+								lore.set(lore.size() - 1, newKillLine);
+								meta.setLore(lore);
+								hand.setItemMeta(meta);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
