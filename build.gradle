@@ -14,14 +14,9 @@ repositories {
     maven {
         url = "https://oss.sonatype.org/content/repositories/snapshots/"
     }
-    maven {
-        url = "https://maven.enginehub.org/repo/"
-    }
 }
 
 dependencies {
     compileOnly('org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT')
-    compileOnly('com.sk89q.worldedit:worldedit-bukkit:7.2.0-SNAPSHOT')
-    compileOnly('com.sk89q.worldguard:worldguard-bukkit:7.0.6')
     implementation('me.vaape:rewards:1.0.0')
 }
